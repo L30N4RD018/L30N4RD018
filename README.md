@@ -65,11 +65,15 @@ embedded text skip OCR entirely.
 
 ## Research
 
-**[VACS: A Modular Software System for Vehicular Access Control](https://github.com/ZenoexORG/vacs-backend)**
-— An Optimized Approach for Automatic License Plate Recognition in Open-Access Environments.
-Published in Springer CCIS (WEA 2025). A modular NestJS backend organised around isolated
-domain modules, with access modelled as enforceable rules and third-party plate recognition as
-the event source. Capstone project, and the code is public.
+**[VACS: A Modular Software System for Vehicular Access Control](https://doi.org/10.1007/978-3-032-08206-0_19)**
+— Alvarino, Taboada, **Mendoza**, Montes & Martinez-Santos. Springer, *Communications in
+Computer and Information Science* (WEA 2025), October 2025.
+[`10.1007/978-3-032-08206-0_19`](https://doi.org/10.1007/978-3-032-08206-0_19) ·
+[source code](https://github.com/ZenoexORG/vacs-backend)
+
+A modular NestJS backend organised around isolated domain modules, with access modelled as
+enforceable rules and third-party plate recognition as the event source. Capstone project, and
+the code is public.
 
 ## Tools I actually use
 
@@ -98,10 +102,19 @@ single-node pipelines, and cloud deployment with real infrastructure-as-code. Th
 
 <div align="center">
 
-<img src="./profile/stats.svg" alt="Github Stats" height="150">
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/L30N4RD018/L30N4RD018/output/stats-dark.svg">
+  <img src="https://raw.githubusercontent.com/L30N4RD018/L30N4RD018/output/stats.svg" alt="GitHub stats" height="150">
+</picture>
 
-<img src="./profile/top-langs.svg" alt="Top languages" height="150" />
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/L30N4RD018/L30N4RD018/output/top-langs-dark.svg">
+  <img src="https://raw.githubusercontent.com/L30N4RD018/L30N4RD018/output/top-langs.svg" alt="Top languages" height="150">
+</picture>
 
-<img src="https://raw.githubusercontent.com/L30N4RD018/L30N4RD018/output/snake.svg" alt="Contribution snake" />
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/L30N4RD018/L30N4RD018/output/snake-dark.svg">
+  <img src="https://raw.githubusercontent.com/L30N4RD018/L30N4RD018/output/snake.svg" alt="Contribution snake">
+</picture>
 
 </div>

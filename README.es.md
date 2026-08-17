@@ -68,11 +68,15 @@ completo.
 
 ## Investigación
 
-**[VACS: A Modular Software System for Vehicular Access Control](https://github.com/ZenoexORG/vacs-backend)**
-— An Optimized Approach for Automatic License Plate Recognition in Open-Access Environments.
-Publicado en Springer CCIS (WEA 2025). Un backend modular en NestJS organizado en módulos de
-dominio aislados, con el acceso modelado como reglas aplicables y el reconocimiento de placas
-de terceros como fuente de eventos. Proyecto de grado, y el código es público.
+**[VACS: A Modular Software System for Vehicular Access Control](https://doi.org/10.1007/978-3-032-08206-0_19)**
+— Alvarino, Taboada, **Mendoza**, Montes y Martinez-Santos. Springer, *Communications in
+Computer and Information Science* (WEA 2025), octubre de 2025.
+[`10.1007/978-3-032-08206-0_19`](https://doi.org/10.1007/978-3-032-08206-0_19) ·
+[código fuente](https://github.com/ZenoexORG/vacs-backend)
+
+Un backend modular en NestJS organizado en módulos de dominio aislados, con el acceso modelado
+como reglas aplicables y el reconocimiento de placas de terceros como fuente de eventos.
+Proyecto de grado, y el código es público.
 
 ## Herramientas que realmente uso
 
@@ -101,8 +105,19 @@ verdad. La distancia entre "lo contenericé" y "lo opero" es la que vale la pena
 
 <div align="center">
 
-<img src="https://github-readme-stats-fast.vercel.app/api?username=L30N4RD018&show_icons=true&hide_border=true&hide_title=true&theme=transparent&hide=stars" alt="GitHub stats" height="150" />
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/L30N4RD018/L30N4RD018/output/stats-dark.svg">
+  <img src="https://raw.githubusercontent.com/L30N4RD018/L30N4RD018/output/stats.svg" alt="Estadísticas de GitHub" height="150">
+</picture>
 
-<img src="https://raw.githubusercontent.com/L30N4RD018/L30N4RD018/output/snake.svg" alt="Snake de contribuciones" />
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/L30N4RD018/L30N4RD018/output/top-langs-dark.svg">
+  <img src="https://raw.githubusercontent.com/L30N4RD018/L30N4RD018/output/top-langs.svg" alt="Lenguajes más usados" height="150">
+</picture>
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/L30N4RD018/L30N4RD018/output/snake-dark.svg">
+  <img src="https://raw.githubusercontent.com/L30N4RD018/L30N4RD018/output/snake.svg" alt="Snake de contribuciones">
+</picture>
 
 </div>
