@@ -24,9 +24,13 @@ on:
 permissions:
   contents: write
 
+# Las corridas se serializan para que dos push simultaneos no se pisen al
+# reescribir `output`. Sin cancel-in-progress: cancelar una corrida a medias no
+# aporta nada en un job diario y hace que una re-ejecucion manual parezca
+# colgada mientras espera el turno.
 concurrency:
   group: profile-assets
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   build:
