@@ -101,7 +101,7 @@ verdad. La distancia entre "lo contenericé" y "lo opero" es la que vale la pena
 
 <div align="center">
 
-<img src="https://github-readme-stats.vercel.app/api?username=L30N4RD018&show_icons=true&hide_border=true&hide_title=true&theme=transparent&hide=stars" alt="Estadísticas de GitHub" height="150" />
+<img src="https://github-readme-stats-fast.vercel.app/api?username=L30N4RD018&show_icons=true&hide_border=true&hide_title=true&theme=transparent&hide=stars" alt="GitHub stats" height="150" />
 
 <img src="https://raw.githubusercontent.com/L30N4RD018/L30N4RD018/output/snake.svg" alt="Snake de contribuciones" />
 

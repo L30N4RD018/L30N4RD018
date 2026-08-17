@@ -98,7 +98,9 @@ single-node pipelines, and cloud deployment with real infrastructure-as-code. Th
 
 <div align="center">
 
-<img src="https://github-readme-stats.vercel.app/api?username=L30N4RD018&show_icons=true&hide_border=true&hide_title=true&theme=transparent&hide=stars" alt="GitHub stats" height="150" />
+<img src="./profile/stats.svg" alt="Github Stats" height="150">
+
+<img src="./profile/top-langs.svg" alt="Top languages" height="150" />
 
 <img src="https://raw.githubusercontent.com/L30N4RD018/L30N4RD018/output/snake.svg" alt="Contribution snake" />
 
