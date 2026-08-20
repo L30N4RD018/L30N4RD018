@@ -1,7 +1,7 @@
 name: Profile assets
 
-# Genera las imagenes del perfil (stats, top languages y snake de contribuciones)
-# y las publica en la rama `output`. Nada de esto se commitea en `main`: la rama
+# Genera las imagenes del perfil (stats, top languages, activity graph y snake
+# de contribuciones) y las publica en la rama `output`. Nada de esto se commitea en `main`: la rama
 # `output` existe solo para artefactos generados, y se reescribe en cada corrida.
 #
 # Nota sobre el cron: GitHub desactiva los workflows programados de un repo
@@ -83,6 +83,50 @@ jobs:
           outputs: |
             dist/snake.svg?palette=github-light
             dist/snake-dark.svg?palette=github-dark
+
+      # El activity graph se descarga aqui en vez de enlazarse desde el README.
+      # Ese es justamente el punto: si el README apuntara directo a la URL del
+      # servicio, cada visita al perfil dependeria de que ese Vercel este arriba
+      # (el github-readme-stats publico, sin ir mas lejos, devuelve 503 seguido).
+      # Bajandolo una vez al dia y publicandolo en `output`, el README solo
+      # depende de raw.githubusercontent.com; si el servicio se cae, el job
+      # aborta antes de publicar y queda la imagen de ayer.
+      #
+      # --fail hace que un 4xx/5xx corte el paso en vez de guardar el cuerpo del
+      # error como si fuera un SVG. --retry cubre los fallos transitorios.
+      #
+      # area_color es imprescindible: sin el, el area bajo la curva se queda con
+      # el rosa por defecto y desentona con el resto de las tarjetas.
+      - name: Contribution activity graph
+        run: |
+          set -euo pipefail
+          mkdir -p dist
+          base="https://github-readme-activity-graph.vercel.app/graph"
+          common="username=${{ github.repository_owner }}&hide_border=true&bg_color=00000000&area=true&grid=true&radius=8&days=30"
+          curl --fail --silent --show-error --location \
+            --retry 3 --retry-delay 5 --max-time 60 \
+            "${base}?${common}&title_color=0969da&color=57606a&line=0969da&point=0969da&area_color=0969da" \
+            -o dist/activity.svg
+          curl --fail --silent --show-error --location \
+            --retry 3 --retry-delay 5 --max-time 60 \
+            "${base}?${common}&title_color=2f81f7&color=8b949e&line=2f81f7&point=2f81f7&area_color=2f81f7" \
+            -o dist/activity-dark.svg
+
+      # Un SVG vacio o truncado pasaria el `git commit` sin quejarse y romperia
+      # el README en silencio. Se valida que cada archivo exista, tenga tamano
+      # razonable y sea realmente XML antes de publicar.
+      - name: Verify generated assets
+        run: |
+          set -euo pipefail
+          expected="stats stats-dark top-langs top-langs-dark snake snake-dark activity activity-dark"
+          for name in $expected; do
+            f="dist/${name}.svg"
+            [ -s "$f" ] || { echo "::error::$f falta o esta vacio"; exit 1; }
+            size=$(wc -c < "$f")
+            [ "$size" -ge 512 ] || { echo "::error::$f solo tiene ${size} bytes"; exit 1; }
+            head -c 512 "$f" | grep -q "<svg" || { echo "::error::$f no parece un SVG"; exit 1; }
+            echo "ok  $f (${size} bytes)"
+          done
 
       # Se publica solo si todos los pasos anteriores produjeron su SVG. Si la
       # generacion falla (rate limit, API caida), el job aborta aqui y la rama
