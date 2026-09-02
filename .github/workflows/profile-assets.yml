@@ -19,6 +19,7 @@ on:
     branches: [main]
     paths:
       - ".github/workflows/profile-assets.yml"
+      - ".github/scripts/**"
   workflow_dispatch:
 
 permissions:
@@ -84,33 +85,41 @@ jobs:
             dist/snake.svg?palette=github-light
             dist/snake-dark.svg?palette=github-dark
 
-      # El activity graph se descarga aqui en vez de enlazarse desde el README.
-      # Ese es justamente el punto: si el README apuntara directo a la URL del
-      # servicio, cada visita al perfil dependeria de que ese Vercel este arriba
-      # (el github-readme-stats publico, sin ir mas lejos, devuelve 503 seguido).
-      # Bajandolo una vez al dia y publicandolo en `output`, el README solo
-      # depende de raw.githubusercontent.com; si el servicio se cae, el job
-      # aborta antes de publicar y queda la imagen de ayer.
+      # El activity graph se genera aca y se publica en `output`, en vez de
+      # enlazarse desde el README. Ese siempre fue el punto: si el README
+      # apuntara a un servicio externo, cada visita al perfil dependeria de que
+      # ese servicio este arriba.
       #
-      # --fail hace que un 4xx/5xx corte el paso en vez de guardar el cuerpo del
-      # error como si fuera un SVG. --retry cubre los fallos transitorios.
+      # Y efectivamente se cayo. Hasta ahora esto bajaba el SVG de
+      # github-readme-activity-graph.vercel.app, que quedo deshabilitado de
+      # forma permanente: devuelve HTTP 402 con x-vercel-error
+      # DEPLOYMENT_DISABLED. Los reintentos no ayudaban porque los tres
+      # recibian el mismo 402, y --fail cortaba el paso.
       #
-      # area_color es imprescindible: sin el, el area bajo la curva se queda con
-      # el rosa por defecto y desentona con el resto de las tarjetas.
+      # Ahora el script consulta el contributionCalendar por la GraphQL de
+      # GitHub y dibuja el SVG con la stdlib de Python, asi que este paso no
+      # depende de ningun tercero. Los colores van por flag para que las dos
+      # variantes cierren con el resto de las tarjetas.
+      #
+      # Si GITHUB_TOKEN alguna vez no alcanzara para leer el calendario, se
+      # carga un PAT como secret ACTIVITY_GRAPH_TOKEN y el fallback de abajo lo
+      # toma sin tocar nada mas.
       - name: Contribution activity graph
+        env:
+          GITHUB_TOKEN: ${{ secrets.ACTIVITY_GRAPH_TOKEN || secrets.GITHUB_TOKEN }}
         run: |
           set -euo pipefail
           mkdir -p dist
-          base="https://github-readme-activity-graph.vercel.app/graph"
-          common="username=${{ github.repository_owner }}&hide_border=true&bg_color=00000000&area=true&grid=true&radius=8&days=30"
-          curl --fail --silent --show-error --location \
-            --retry 3 --retry-delay 5 --max-time 60 \
-            "${base}?${common}&title_color=0969da&color=57606a&line=0969da&point=0969da&area_color=0969da" \
-            -o dist/activity.svg
-          curl --fail --silent --show-error --location \
-            --retry 3 --retry-delay 5 --max-time 60 \
-            "${base}?${common}&title_color=2f81f7&color=8b949e&line=2f81f7&point=2f81f7&area_color=2f81f7" \
-            -o dist/activity-dark.svg
+          python3 .github/scripts/activity-graph.py \
+            --username "${{ github.repository_owner }}" --days 30 \
+            --title-color 0969da --axis-color 57606a \
+            --line-color 0969da --area-color 0969da \
+            --output dist/activity.svg
+          python3 .github/scripts/activity-graph.py \
+            --username "${{ github.repository_owner }}" --days 30 \
+            --title-color 2f81f7 --axis-color 8b949e \
+            --line-color 2f81f7 --area-color 2f81f7 \
+            --output dist/activity-dark.svg
 
       # Un SVG vacio o truncado pasaria el `git commit` sin quejarse y romperia
       # el README en silencio. Se valida que cada archivo exista, tenga tamano
