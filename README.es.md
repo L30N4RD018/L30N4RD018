@@ -14,78 +14,72 @@
 
 ---
 
-Construyo servicios backend y pipelines de datos que lidian con fuentes reales y desordenadas:
-registros gubernamentales sin API, documentos normativos escaneados y formatos de archivo
-heredados que nunca se pensaron para ser parseados. Casi todo ese trabajo ocurre en el sector
-público de salud colombiano.
+Construyo servicios backend y flujos de datos en Python, sobre todo para el sector salud en
+Colombia, donde la información rara vez llega limpia: registros públicos sin API, normas que solo
+existen como PDF escaneados y formatos de archivo de hace más de veinte años.
 
-La mayor parte de mi código profesional vive en repositorios privados de la organización, así
-que lo que sigue describe lo que construí en lugar de enlazarlo. Los repositorios públicos de
-este perfil son trabajo académico y personal.
+La mayoría de los sistemas de abajo pertenecen a las organizaciones para las que los construí,
+así que su código es privado. Cuando el código es público, está enlazado.
 
 ## Lo que he construido
 
-### Plataforma de evaluación de candidatos &nbsp;<img alt="en producción" src="https://img.shields.io/badge/en%20producci%C3%B3n-1a7f37?style=flat-square">
+### SEFP: plataforma de procesos de selección &nbsp;<img alt="en producción" src="https://img.shields.io/badge/en%20producci%C3%B3n-1a7f37?style=flat-square">
 
-<img alt="FastAPI" src="https://img.shields.io/badge/FastAPI-555?style=flat-square&logo=fastapi&logoColor=white"> <img alt="PostgreSQL" src="https://img.shields.io/badge/PostgreSQL-555?style=flat-square&logo=postgresql&logoColor=white"> <img alt="Redis" src="https://img.shields.io/badge/Redis-555?style=flat-square&logo=redis&logoColor=white"> <img alt="WebSockets" src="https://img.shields.io/badge/WebSockets-555?style=flat-square&logo=socketdotio&logoColor=white"> <img alt="S3" src="https://img.shields.io/badge/S3--compatible-555?style=flat-square&logo=minio&logoColor=white">
+<img alt="FastAPI" src="https://img.shields.io/badge/FastAPI-555?style=flat-square&logo=fastapi&logoColor=white"> <img alt="PostgreSQL" src="https://img.shields.io/badge/PostgreSQL-555?style=flat-square&logo=postgresql&logoColor=white"> <img alt="Docker" src="https://img.shields.io/badge/Docker-555?style=flat-square&logo=docker&logoColor=white"> <img alt="Next.js" src="https://img.shields.io/badge/Next.js-555?style=flat-square&logo=nextdotjs&logoColor=white">
 
-Diseñé y construí el backend detrás de la plataforma que ejecuta los procesos de selección de
-mi organización, y que ya ha corrido más de 20 procesos reales a lo largo de dos generaciones.
-Lo interesante: los ciclos de vida de examen modelados como máquinas de estado, de modo que una
-transición inválida falla en el dominio en vez de filtrarse a los endpoints; una tabla Outbox
-que dispara las notificaciones asíncronas; y proctoring remoto con subida de video por
-fragmentos más un canal WebSocket para los temporizadores de intento, diseñado para que una
-conexión caída nunca le cueste el avance a un candidato. Rehíce el modelo de datos para la
-segunda generación sin tumbar la primera, que siguió viva e intacta para auditoría.
+La plataforma con la que FUNDASABERES adelanta procesos de selección para otras entidades, desde
+la inscripción de los candidatos hasta los exámenes en línea y la evaluación. Está en producción
+desde julio de 2026. Es un proyecto de equipo en el que estuve a cargo del backend y del modelo
+de datos, y escribí la mayor parte de las pruebas automatizadas del backend. Con su primera
+versión, COMPETEA, se adelantaron más de 20 procesos de selección reales; ahí desarrollé la
+mayor parte del backend.
 
-### Visor geoespacial de una red regional de salud
+### Geovisor: la red de prestadores de salud de Colombia en un mapa
 
-<img alt="NetworkX" src="https://img.shields.io/badge/NetworkX-555?style=flat-square&logo=python&logoColor=white"> <img alt="GeoPandas" src="https://img.shields.io/badge/GeoPandas-555?style=flat-square&logo=geopandas&logoColor=white"> <img alt="OpenStreetMap" src="https://img.shields.io/badge/OpenStreetMap-555?style=flat-square&logo=openstreetmap&logoColor=white"> <img alt="JSON Schema" src="https://img.shields.io/badge/JSON%20Schema-555?style=flat-square&logo=json&logoColor=white"> <img alt="offline-first" src="https://img.shields.io/badge/offline--first-555?style=flat-square&logo=linux&logoColor=white">
+<img alt="FastAPI" src="https://img.shields.io/badge/FastAPI-555?style=flat-square&logo=fastapi&logoColor=white"> <img alt="GeoPandas" src="https://img.shields.io/badge/GeoPandas-555?style=flat-square&logo=geopandas&logoColor=white"> <img alt="MapLibre" src="https://img.shields.io/badge/MapLibre-555?style=flat-square"> <img alt="OpenStreetMap" src="https://img.shields.io/badge/OpenStreetMap-555?style=flat-square&logo=openstreetmap&logoColor=white">
 
-Un motor de ruteo sobre una red vial de **1,4 millones de nodos**, que devuelve rutas de
-referencia entre prestadores de salud en **menos de medio segundo**. Consolida 6,8 GB de
-cartografía nacional y extractos de OpenStreetMap en un único modelo consultable, validado
-contra un contrato JSON Schema para que los datos malformados fallen en la ingesta y no dentro
-del visor. Está construido offline-first: todo corre en un portátil institucional sin conexión
-con un solo comando `uvicorn` —sin Docker, sin red, sin Node— y con una verificación automática
-de que el frontend empaquetado no hace ninguna petición externa.
+Visor geográfico para analizar las redes de referencia en salud del país, construido en
+FUNDASABERES. Reúne las **19.447 sedes** del registro nacional de prestadores en los 33
+departamentos y calcula rutas por carretera entre ellas en **menos de medio segundo**, sobre
+redes viales de hasta 1,4 millones de nodos. Integra 6,8 GB de cartografía nacional del DANE y
+de OpenStreetMap, y funciona sin conexión a internet.
 
-### Crawler del registro nacional de prestadores de salud
+### REPS Scraper &nbsp;<a href="https://github.com/L30N4RD018/reps-scraper"><img alt="code" src="https://img.shields.io/badge/c%C3%B3digo-181717?style=flat-square&logo=github&logoColor=white"></a>
 
-<img alt="Playwright" src="https://img.shields.io/badge/Playwright-555?style=flat-square&logo=playwright&logoColor=white"> <img alt="Python" src="https://img.shields.io/badge/Python-555?style=flat-square&logo=python&logoColor=white"> <img alt="SQLite" src="https://img.shields.io/badge/SQLite-555?style=flat-square&logo=sqlite&logoColor=white"> <img alt="reanudable" src="https://img.shields.io/badge/reanudable-555?style=flat-square">
+<img alt="Python" src="https://img.shields.io/badge/Python-555?style=flat-square&logo=python&logoColor=white"> <img alt="Playwright" src="https://img.shields.io/badge/Playwright-555?style=flat-square&logo=playwright&logoColor=white"> <img alt="SQLite" src="https://img.shields.io/badge/SQLite-555?style=flat-square&logo=sqlite&logoColor=white">
 
-El registro público de prestadores de salud de Colombia no tiene API. Automaticé su extracción
-con Playwright, recolectando los **932 hospitales públicos** del país junto con sus sedes,
-servicios y capacidad instalada. Persiste el progreso para que una corrida interrumpida se
-reanude en lugar de empezar de cero, reparte el trabajo entre workers paralelos y puede
-reprocesar únicamente los registros que fallaron.
+El Registro Especial de Prestadores de Servicios de Salud (REPS) no tiene API. Este programa lo
+extrae con Playwright: los **932 hospitales públicos** del país, con sus sedes, servicios y
+capacidad instalada. Guarda su avance, retoma donde quedó si algo falla y puede reintentar solo
+los registros que fallaron.
 
-### ETL normativo de facturación en salud
+### Conversor de RIPS
 
-<img alt="Pydantic" src="https://img.shields.io/badge/Pydantic-555?style=flat-square&logo=pydantic&logoColor=white"> <img alt="pandas" src="https://img.shields.io/badge/pandas-555?style=flat-square&logo=pandas&logoColor=white"> <img alt="ETL" src="https://img.shields.io/badge/ETL-555?style=flat-square">
+<img alt="Python" src="https://img.shields.io/badge/Python-555?style=flat-square&logo=python&logoColor=white"> <img alt="Pydantic" src="https://img.shields.io/badge/Pydantic-555?style=flat-square&logo=pydantic&logoColor=white"> <img alt="pandas" src="https://img.shields.io/badge/pandas-555?style=flat-square&logo=pandas&logoColor=white">
 
-La facturación en salud en Colombia pasó de un estándar de archivos planos escrito en el año
-2000 al formato JSON jerárquico que exige la normativa de 2023. Construí el ETL de esa
-migración, aislando lectores, transformación y salida validada para que un cambio en la
-normativa toque una sola capa. La corrección se impone con esquemas Pydantic contra las tablas
-de referencia oficiales, no por convención.
+La facturación en salud en Colombia pasó de un formato de archivos planos del año 2000 a la
+estructura JSON que exige la normativa de 2023. Construí la herramienta que convierte los
+archivos antiguos al formato nuevo y los valida contra las tablas de referencia oficiales.
 
-### Extracción estructural de documentos legales
+### doc-ocr &nbsp;<a href="https://github.com/L30N4RD018/doc-ocr"><img alt="code" src="https://img.shields.io/badge/c%C3%B3digo-181717?style=flat-square&logo=github&logoColor=white"></a>
 
-<img alt="OpenCV" src="https://img.shields.io/badge/OpenCV-555?style=flat-square&logo=opencv&logoColor=white"> <img alt="OCR" src="https://img.shields.io/badge/OCR-555?style=flat-square"> <img alt="NumPy" src="https://img.shields.io/badge/NumPy-555?style=flat-square&logo=numpy&logoColor=white">
+<img alt="Python" src="https://img.shields.io/badge/Python-555?style=flat-square&logo=python&logoColor=white"> <img alt="OpenCV" src="https://img.shields.io/badge/OpenCV-555?style=flat-square&logo=opencv&logoColor=white"> <img alt="OCR" src="https://img.shields.io/badge/OCR-555?style=flat-square">
 
-Un pipeline que convierte resoluciones y documentos normativos escaneados en formato legible
-por máquina, preservando el orden de lectura original y la estructura de las tablas. La
-decisión que lo hizo funcionar: detectar la geometría de la página con OpenCV *antes* de
-invocar el modelo de OCR, de manera que este solo ve regiones de texto y celdas de tabla ya
-identificadas, nunca páginas completas. Los PDFs con texto embebido se saltan el OCR por
-completo.
+Una herramienta que convierte normas y documentos legales escaneados en texto consultable.
+Detecta las tablas antes de aplicar OCR, para que sus columnas no se mezclen.
+
+### NASA Studies API &nbsp;<a href="https://github.com/L30N4RD018/nasa-studies-api"><img alt="code" src="https://img.shields.io/badge/c%C3%B3digo-181717?style=flat-square&logo=github&logoColor=white"></a>
+
+<img alt="FastAPI" src="https://img.shields.io/badge/FastAPI-555?style=flat-square&logo=fastapi&logoColor=white"> <img alt="llama.cpp" src="https://img.shields.io/badge/llama.cpp-555?style=flat-square"> <img alt="NASA Space Apps 2025" src="https://img.shields.io/badge/NASA%20Space%20Apps%202025-555?style=flat-square&logo=nasa&logoColor=white">
+
+Proyecto del NASA Space Apps Challenge 2025. Una API para explorar 1.119 estudios de biología
+espacial del repositorio de datos abiertos de la NASA. Redacta un título y un resumen para
+cualquier grupo de estudios con un modelo de lenguaje que corre en local, en CPU, y sigue
+funcionando con un método más simple cuando el modelo no está disponible.
 
 ## Investigación
 
-Dos capítulos de la misma serie de volúmenes Springer CCIS de WEA 2025, escritos con el mismo
-equipo: uno sobre el sistema de control de acceso y otro sobre el pipeline de reconocimiento de
-placas que lo alimenta.
+Dos artículos publicados por Springer (CCIS, WEA 2025), escritos con el mismo equipo.
 
 <img alt="Springer" src="https://img.shields.io/badge/Springer-CCIS%20%C2%B7%20WEA%202025-1F4B99?style=flat-square"> <img alt="revisado por pares" src="https://img.shields.io/badge/revisado%20por%20pares-1a7f37?style=flat-square"> <img alt="NestJS" src="https://img.shields.io/badge/NestJS-555?style=flat-square&logo=nestjs&logoColor=white"> <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-555?style=flat-square&logo=typescript&logoColor=white"> <a href="https://github.com/ZenoexORG/vacs-backend"><img alt="código fuente" src="https://img.shields.io/badge/c%C3%B3digo%20fuente-181717?style=flat-square&logo=github&logoColor=white"></a>
 
@@ -94,9 +88,9 @@ placas que lo alimenta.
 Computer and Information Science* (WEA 2025), pp. 222–232, octubre de 2025.
 [`10.1007/978-3-032-08206-0_19`](https://doi.org/10.1007/978-3-032-08206-0_19)
 
-Un backend modular en NestJS organizado en módulos de dominio aislados, con el acceso modelado
-como reglas aplicables y el reconocimiento de placas como fuente de eventos. Proyecto de grado,
-y el código es público.
+El backend del sistema de control de acceso vehicular que desarrollamos como proyecto de
+grado: una cámara lee cada placa y el sistema decide quién puede entrar, registra cada acceso y
+señala los incidentes. El código es público.
 
 <img alt="Springer" src="https://img.shields.io/badge/Springer-CCIS%20%C2%B7%20WEA%202025-1F4B99?style=flat-square"> <img alt="revisado por pares" src="https://img.shields.io/badge/revisado%20por%20pares-1a7f37?style=flat-square"> <img alt="YOLOv11" src="https://img.shields.io/badge/YOLOv11-555?style=flat-square"> <img alt="OpenCV" src="https://img.shields.io/badge/OpenCV-555?style=flat-square&logo=opencv&logoColor=white"> <img alt="FastAPI" src="https://img.shields.io/badge/FastAPI-555?style=flat-square&logo=fastapi&logoColor=white"> <img alt="Redis" src="https://img.shields.io/badge/Redis-555?style=flat-square&logo=redis&logoColor=white">
 
@@ -105,9 +99,8 @@ y el código es público.
 Information Science* (WEA 2025), pp. 223–233, octubre de 2025.
 [`10.1007/978-3-032-08203-9_19`](https://doi.org/10.1007/978-3-032-08203-9_19)
 
-El pipeline de reconocimiento que hay detrás de VACS: detección y OCR ajustados a entornos de
-acceso abierto, donde las placas llegan en ángulos, distancias e iluminación sin controlar en
-vez de en una talanquera. Se sirve sobre FastAPI con Redis por delante.
+El reconocimiento de placas que hay detrás de VACS, pensado para lugares donde las placas se
+ven desde distintos ángulos, distancias e iluminación, y no frente a una talanquera.
 
 ## Herramientas que realmente uso
 
@@ -120,17 +113,14 @@ vez de en una talanquera. Se sirve sobre FastAPI con Redis por delante.
 | **Infraestructura** | <img alt="Docker" src="https://img.shields.io/badge/Docker-2496ED?style=flat-square&logo=docker&logoColor=white"> <img alt="Nginx" src="https://img.shields.io/badge/Nginx-009639?style=flat-square&logo=nginx&logoColor=white"> <img alt="GitHub Actions" src="https://img.shields.io/badge/GitHub%20Actions-2088FF?style=flat-square&logo=githubactions&logoColor=white"> <img alt="Linux" src="https://img.shields.io/badge/Linux-FCC624?style=flat-square&logo=linux&logoColor=black"> <img alt="Terraform" src="https://img.shields.io/badge/Terraform-7B42BC?style=flat-square&logo=terraform&logoColor=white"> <img alt="Vault" src="https://img.shields.io/badge/Vault-FFEC6E?style=flat-square&logo=vault&logoColor=black"> |
 | **Prácticas** | <img alt="pytest" src="https://img.shields.io/badge/pytest-0A9EDC?style=flat-square&logo=pytest&logoColor=white"> <img alt="CI/CD" src="https://img.shields.io/badge/CI%2FCD-2088FF?style=flat-square&logo=githubactions&logoColor=white"> <img alt="Contratos de API" src="https://img.shields.io/badge/Contratos%20de%20API-6BA539?style=flat-square&logo=swagger&logoColor=white"> <img alt="Escritura técnica" src="https://img.shields.io/badge/Escritura%20t%C3%A9cnica-24292F?style=flat-square&logo=markdown&logoColor=white"> |
 
-El modelado relacional, la indexación y las migraciones viven bajo los badges de bases de
-datos; el diseño de pipelines ETL y el diseño de contratos de API son las partes en las que más
-pienso y las que ningún logo representa. También he construido prototipos de infraestructura
-con Terraform, Vault y Docker Swarm (aprovisionamiento de base de datos por tenant), aunque
-todavía no en producción.
+El modelado relacional, la indexación y las migraciones van bajo las insignias de bases de
+datos. También he construido prototipos de infraestructura con Terraform, Vault y Docker Swarm,
+aunque ninguno está en producción todavía.
 
 ## Ahora mismo
 
-Profundizando en dos cosas en lugar de abarcar muchas: procesamiento distribuido de datos más
-allá de pipelines de un solo nodo, y despliegue en la nube con infraestructura como código de
-verdad. La distancia entre "lo contenericé" y "lo opero" es la que vale la pena cerrar ahora.
+Estoy profundizando en dos temas: procesar datos en más de una máquina y desplegar en la nube
+con infraestructura como código.
 
 ---
 
