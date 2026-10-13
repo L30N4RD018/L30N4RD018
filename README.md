@@ -6,7 +6,7 @@
 
 <sub>📍 Cartagena, Colombia</sub>
 
-<a href="https://www.linkedin.com/in/leonardomendoza-dev"><img alt="LinkedIn" src="https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white"></a> <a href="mailto:leonardomendoza2003@gmail.com"><img alt="Email" src="https://img.shields.io/badge/Email-EA4335?style=for-the-badge&logo=gmail&logoColor=white"></a> <a href="https://doi.org/10.1007/978-3-032-08206-0_19"><img alt="DOI" src="https://img.shields.io/badge/DOI-Springer%20WEA%202025-1F4B99?style=for-the-badge&logo=doi&logoColor=white"></a> <a href="https://orcid.org/0009-0005-0598-2239"><img alt="ORCID" src="https://img.shields.io/badge/ORCID-A6CE39?style=for-the-badge&logo=orcid&logoColor=white"></a>
+<a href="https://l30n4rd018.github.io"><img alt="Website" src="https://img.shields.io/badge/Website-l30n4rd018.github.io-0b1020?style=for-the-badge&logo=googlechrome&logoColor=5eead4"></a> <a href="https://www.linkedin.com/in/leonardomendoza-dev"><img alt="LinkedIn" src="https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white"></a> <a href="mailto:leonardomendoza2003@gmail.com"><img alt="Email" src="https://img.shields.io/badge/Email-EA4335?style=for-the-badge&logo=gmail&logoColor=white"></a> <a href="https://doi.org/10.1007/978-3-032-08206-0_19"><img alt="DOI" src="https://img.shields.io/badge/DOI-Springer%20WEA%202025-1F4B99?style=for-the-badge&logo=doi&logoColor=white"></a> <a href="https://orcid.org/0009-0005-0598-2239"><img alt="ORCID" src="https://img.shields.io/badge/ORCID-A6CE39?style=for-the-badge&logo=orcid&logoColor=white"></a>
 
 <sub>🇬🇧 English · <a href="README.es.md">🇪🇸 Español</a></sub>
 
